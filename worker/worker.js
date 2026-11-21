@@ -208,7 +208,13 @@ async function handleChat(request, env, origin) {
   const system = `${SYSTEM_PROMPT}\n\nReply in ${LANGUAGE_NAMES[language]}.`;
   const messages = [{ role: "system", content: system }, ...history, { role: "user", content: message }];
 
-  const first = await env.AI.run(CHAT_MODEL, { messages, tools: TOOLS, max_tokens: 450, temperature: 0.35 });
+  let first;
+  try {
+    first = await env.AI.run(CHAT_MODEL, { messages, tools: TOOLS, max_tokens: 450, temperature: 0.35 });
+  } catch (error) {
+    console.error("Nova initial model call failed:", error instanceof Error ? error.message : "Unknown error");
+    throw error;
+  }
   const calls = getToolCalls(first).slice(0, 2);
   const links = new Map();
   const sources = [];
@@ -241,7 +247,12 @@ async function handleChat(request, env, origin) {
         content: JSON.stringify(toolResult),
       });
     }
-    finalResult = await env.AI.run(CHAT_MODEL, { messages, max_tokens: 450, temperature: 0.35 });
+    try {
+      finalResult = await env.AI.run(CHAT_MODEL, { messages, max_tokens: 450, temperature: 0.35 });
+    } catch (error) {
+      console.error("Nova tool follow-up model call failed:", error instanceof Error ? error.message : "Unknown error");
+      throw error;
+    }
   }
 
   const reply = typeof finalResult.response === "string"
