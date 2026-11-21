@@ -1,0 +1,22 @@
+name = "nova-portfolio-agent"
+main = "worker.js"
+compatibility_date = "2026-11-21"
+workers_dev = true
+
+[assets]
+directory = "../"
+run_worker_first = ["/api/*", "/health"]
+
+[ai]
+binding = "AI"
+
+[[ratelimits]]
+name = "NOVA_LIMITER"
+namespace_id = "43011144"
+
+  [ratelimits.simple]
+  limit = 20
+  period = 60
+
+[vars]
+ALLOWED_ORIGINS = "https://43011144.github.io,http://localhost:8000,http://127.0.0.1:8000"
