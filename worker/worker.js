@@ -264,7 +264,15 @@ async function handleChat(request, env, origin) {
   const reply = typeof finalResult.response === "string"
     ? finalResult.response
     : finalResult.choices?.[0]?.message?.content;
-  if (!reply) return jsonResponse({ error: "The AI returned an empty response." }, 502, origin);
+  if (!reply) {
+    console.error("Nova AI returned no text:", {
+      resultKeys: Object.keys(finalResult || {}),
+      messageKeys: Object.keys(finalResult?.choices?.[0]?.message || {}),
+      toolCallCount: getToolCalls(finalResult).length,
+      finishReason: finalResult?.choices?.[0]?.finish_reason,
+    });
+    return jsonResponse({ error: "The AI returned an empty response." }, 502, origin);
+  }
   return jsonResponse({ reply, links: [...links.values()], sources }, 200, origin);
 }
 
