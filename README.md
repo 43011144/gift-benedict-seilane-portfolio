@@ -4,14 +4,14 @@ A software engineering portfolio with project links, a downloadable CV, and Nova
 
 ## Run locally
 
-Open `index.html` for the local portfolio guide. For a Cloudflare-compatible preview, run `npx wrangler dev --config worker/wrangler.toml` from the repository root. Microphone access requires HTTPS or localhost and explicit visitor permission.
+Open `index.html` for the local portfolio guide. For a Cloudflare-compatible preview, run `npx wrangler dev` from the repository root. Microphone access requires HTTPS or localhost and explicit visitor permission.
 
 ## Deploy to Cloudflare
 
 1. Keep the Worker on Cloudflare's **Free** plan and authenticate Wrangler with `npx wrangler login`.
-2. From the repository root, deploy the site and Worker together with `npx wrangler deploy --config worker/wrangler.toml`. The Wrangler config points static assets at the repository root while `.assetsignore` keeps source/configuration files out of the public asset bundle.
-3. In the Cloudflare dashboard, connect the independent GitHub repository to Workers Builds and use `npx wrangler deploy --config worker/wrangler.toml` as the deploy command. This deploys future commits from `main` automatically. The `nova-api` setting defaults to `same-origin`, so no API URL or CORS update is needed.
-4. To enable internet search, add a Brave Search API key as a Worker secret: `npx wrangler secret put BRAVE_SEARCH_API_KEY`. Keep secrets in Cloudflare, never in the repository or website. Search is unavailable until this optional secret is configured.
+2. From the repository root, deploy the site and Worker together with `npx wrangler deploy`. The root Wrangler config points static assets at the repository root while `.assetsignore` keeps source/configuration files out of the public asset bundle.
+3. Connect the independent GitHub repository to Cloudflare Workers Builds and use `npx wrangler deploy` as the deploy command. This deploys future commits from `main` automatically. The `nova-api` setting defaults to `same-origin`, so no API URL or CORS update is needed.
+4. To enable internet search, add a Brave Search API key as a Worker secret from the repository root: `npx wrangler secret put BRAVE_SEARCH_API_KEY`. Keep secrets in Cloudflare, never in the repository or website. Search is unavailable until this optional secret is configured.
 
 Workers AI has a free daily allocation of 10,000 Neurons; AI requests stop when the free quota is exhausted. Brave advertises up to $20 in free monthly calls; use only the free allowance and do not add prepaid credits or enable a paid plan.
 
