@@ -77,32 +77,38 @@ Respond in the selected language when one is specified; otherwise follow the lan
 
 const TOOLS = [
   {
-    name: "get_portfolio_links",
-    description: "Return verified portfolio, project, contact, CV, GitHub, or LinkedIn links when the visitor asks for one.",
-    parameters: {
-      type: "object",
-      properties: {
-        topic: {
-          type: "string",
-          description: "Which verified portfolio links the visitor wants.",
-          enum: ["all", "projects", "tapas", "tripbuddy", "thoxie", "digitalmarketing", "cv", "github", "linkedin", "email"],
+    type: "function",
+    function: {
+      name: "get_portfolio_links",
+      description: "Return verified portfolio, project, contact, CV, GitHub, or LinkedIn links when the visitor asks for one.",
+      parameters: {
+        type: "object",
+        properties: {
+          topic: {
+            type: "string",
+            description: "Which verified portfolio links the visitor wants.",
+            enum: ["all", "projects", "tapas", "tripbuddy", "thoxie", "digitalmarketing", "cv", "github", "linkedin", "email"],
+          },
         },
+        required: ["topic"],
       },
-      required: ["topic"],
     },
   },
   {
-    name: "search_web",
-    description: "Search the public web when the visitor asks about current, external, or internet information. Use a short query in the visitor's language.",
-    parameters: {
-      type: "object",
-      properties: {
-        query: {
-          type: "string",
-          description: "A concise search query in the visitor's language.",
+    type: "function",
+    function: {
+      name: "search_web",
+      description: "Search the public web when the visitor asks about current, external, or internet information. Use a short query in the visitor's language.",
+      parameters: {
+        type: "object",
+        properties: {
+          query: {
+            type: "string",
+            description: "A concise search query in the visitor's language.",
+          },
         },
+        required: ["query"],
       },
-      required: ["query"],
     },
   },
 ];
