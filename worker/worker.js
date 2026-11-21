@@ -84,6 +84,7 @@ const TOOLS = [
       properties: {
         topic: {
           type: "string",
+          description: "Which verified portfolio links the visitor wants.",
           enum: ["all", "projects", "tapas", "tripbuddy", "thoxie", "digitalmarketing", "cv", "github", "linkedin", "email"],
         },
       },
@@ -95,7 +96,12 @@ const TOOLS = [
     description: "Search the public web when the visitor asks about current, external, or internet information. Use a short query in the visitor's language.",
     parameters: {
       type: "object",
-      properties: { query: { type: "string" } },
+      properties: {
+        query: {
+          type: "string",
+          description: "A concise search query in the visitor's language.",
+        },
+      },
       required: ["query"],
     },
   },
