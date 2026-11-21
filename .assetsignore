@@ -1,5 +1,10 @@
 worker/
 .github/
+.git/
+.wrangler/
+node_modules/
+.env*
+.dev.vars*
 README.md
 .assetsignore
 .nojekyll
